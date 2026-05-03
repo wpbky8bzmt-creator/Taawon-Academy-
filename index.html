@@ -1,0 +1,101 @@
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taawon Academy</title>
+
+<style>
+body {font-family: Arial; background:#0f172a; color:white; padding:15px;}
+.card {background:#1e293b; padding:15px; border-radius:12px; margin-bottom:10px;}
+h1 {text-align:center; color:#38bdf8;}
+select {width:100%; padding:8px; margin-bottom:10px;}
+button {padding:5px; border:none; border-radius:5px; background:green; color:white;}
+.star {font-size:25px; cursor:pointer;}
+</style>
+
+</head>
+<body>
+
+<h1>🏊 Taawon Academy</h1>
+
+<div class="card">
+<h3>Today Session</h3>
+<p id="today"></p>
+</div>
+
+<div class="card">
+<select id="week"></select>
+<select id="unit"></select>
+<div id="session"></div>
+</div>
+
+<div class="card">
+<h3>Attendance</h3>
+<div id="list"></div>
+</div>
+
+<div class="card">
+<h3>Rating</h3>
+<span class="star" onclick="rate(1)">★</span>
+<span class="star" onclick="rate(2)">★</span>
+<span class="star" onclick="rate(3)">★</span>
+<span class="star" onclick="rate(4)">★</span>
+<span class="star" onclick="rate(5)">★</span>
+<p id="ratingText"></p>
+</div>
+
+<script>
+
+// swimmers
+let swimmers = ["Azhar","Youssef","Hamad","Badr","Tawfiq","Mohamed","Asser","Haidar","Lana","Sanoti","Shanoli","Mira","Diala","Rawda","Arwa","Kenzy","Tala"];
+
+// sessions
+let sessions = {};
+for(let w=1; w<=28; w++){
+    sessions[w] = {};
+    for(let u=1; u<=4; u++){
+        sessions[w][u] = <b>Week ${w} - Unit ${u}</b><br>Training session;
+    }
+}
+
+// today
+let d = new Date();
+let week = Math.ceil(d.getDate()/7);
+let unit = (d.getDay()%4)+1;
+document.getElementById("today").innerText = Week ${week} - Unit ${unit};
+
+// dropdown
+let wSel = document.getElementById("week");
+let uSel = document.getElementById("unit");
+
+for(let i=1;i<=28;i++){wSel.innerHTML += <option>${i}</option>;}
+for(let i=1;i<=4;i++){uSel.innerHTML += <option>${i}</option>;}
+
+wSel.value = week;
+uSel.value = unit;
+
+function load(){
+    document.getElementById("session").innerHTML = sessions[wSel.value][uSel.value];
+}
+wSel.onchange = load;
+uSel.onchange = load;
+load();
+
+// attendance
+let list = document.getElementById("list");
+swimmers.forEach(name=>{
+    let div = document.createElement("div");
+    div.innerHTML = ${name} <button onclick="this.innerText='✔'">✔</button>;
+    list.appendChild(div);
+});
+
+// rating
+function rate(n){
+    document.getElementById("ratingText").innerText = Rating: ${n} ⭐;
+}
+
+</script>
+
+</body>
+</html
